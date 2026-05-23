@@ -2,13 +2,13 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-amber-400 border-t border-black mt-10 dark:bg-[#737373]">
+    <footer className="bg-[#ff66a3] border-t border-black mt-10 dark:bg-[#737373]">
       <div className="max-w-6xl mx-auto px-6 py-10">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo */}
           <div>
-            <h1 className="text-4xl font-extrabold text-white dark:text-amber-400 [text-shadow:1px_1px_0px_#999,2px_2px_0px_#777]">
+            <h1 className="text-4xl font-extrabold text-white dark:text-[#ff66a3] [text-shadow:1px_1px_1px_#000000,2px_2px_1px_#000000]">
               IdeaVault
             </h1>
             <p className="text-black dark:text-white mt-2 text-sm font-medium">

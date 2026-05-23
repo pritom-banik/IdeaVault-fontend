@@ -35,7 +35,7 @@ const Hero = () => {
       >
         {/* Slide 1 */}
         <SwiperSlide>
-          <div className="relative overflow-hidden bg-gradient-to-br from-amber-300 via-yellow-200 to-orange-200 min-h-[550px] flex items-center rounded-xl">
+          <div className="relative overflow-hidden bg-gradient-to-br from-[#ff66a3] to-[#c489a1] min-h-[550px] flex items-center border-black border-2 border-b-10 border-r-10">
             {/* Background Blur Effects */}
             <div className="absolute top-0 left-0 w-72 h-72 bg-orange-400/30 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/20 rounded-full blur-3xl"></div>
@@ -87,7 +87,7 @@ const Hero = () => {
 
         {/* Slide 2 */}
         <SwiperSlide>
-          <div className="relative overflow-hidden bg-gradient-to-br from-amber-300 via-yellow-200 to-orange-200 min-h-[550px] flex items-center rounded-xl">
+          <div className="relative overflow-hidden bg-gradient-to-br from-[#ff66a3] to-[#c489a1] min-h-[550px] flex items-center border-black border-2 border-b-10 border-r-10">
             {/* Background Blur Effects */}
             <div className="absolute top-0 left-0 w-72 h-72 bg-orange-400/30 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/20 rounded-full blur-3xl"></div>
@@ -138,7 +138,7 @@ const Hero = () => {
 
         {/* Slide 3 */}
         <SwiperSlide>
-          <div className="relative overflow-hidden bg-gradient-to-br from-amber-300 via-yellow-200 to-orange-200 min-h-[550px] flex items-center rounded-xl">
+          <div className="relative overflow-hidden bg-gradient-to-br from-[#ff66a3] to-[#c489a1] min-h-[550px] flex items-center border-black border-2 border-b-10 border-r-10">
             {/* Background Blur Effects */}
             <div className="absolute top-0 left-0 w-72 h-72 bg-orange-400/30 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/20 rounded-full blur-3xl"></div>

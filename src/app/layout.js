@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
 
-          <main className="flex-grow bg-[#f5deb3] dark:bg-[#737373]">
+          <main className="flex-grow bg-[#e8e8e8] dark:bg-[#737373]">
             {children}
           </main>
 

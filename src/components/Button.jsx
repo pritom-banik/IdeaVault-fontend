@@ -6,7 +6,6 @@ const baseStyle = `
   shadow-[4px_4px_0_#000]
   text-black
   font-extrabold
-  rounded-md
   transition-all duration-300
   hover:translate-x-[2px]
   hover:translate-y-[2px]
