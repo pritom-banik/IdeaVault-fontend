@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo */}
           <div>
-            <h1 className="text-3xl font-extrabold text-white [text-shadow:1px_1px_0px_#999,2px_2px_0px_#777]">
+            <h1 className="text-4xl font-extrabold text-white [text-shadow:1px_1px_0px_#999,2px_2px_0px_#777]">
               IdeaVault
             </h1>
             <p className="text-black mt-2 text-sm font-medium">

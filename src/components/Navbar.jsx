@@ -71,10 +71,10 @@ const Navbar = () => {
             </li>
         </ul>
         <div className="hidden sm:flex justify-between gap-2">
-          <Link href="/login">
+          <Link href="/login" className="cursor-pointer">
             <LoginButton></LoginButton>
           </Link>
-          <Link href="/registration">
+          <Link href="/registration" className="cursor-pointer">
             <RegisterButton></RegisterButton>
           </Link>
         </div>
