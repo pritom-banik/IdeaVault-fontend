@@ -2,11 +2,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { LoginButton, RegisterButton } from "@/components/Button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-separator  backdrop-blur-lg border border-black bg-amber-400">
+    <nav className="sticky top-0 z-40 w-full border-b border-separator  backdrop-blur-lg border border-black bg-amber-400 dark:bg-[#737373]">
       <header className="mx-auto flex flex-overflow h-16 max-w-6xl items-center justify-between px-6">
         <div className={`flex items-center gap-4 `}>
           <button
@@ -42,13 +43,21 @@ const Navbar = () => {
 
           <div className="flex items-center gap-3">
             <p
-              className={`text-4xl font-extrabold text-white [text-shadow:1px_1px_0px_#999,2px_2px_0px_#777,3px_3px_0px_#555]`}
-            >
-              IdeaVault
-            </p>
+  className="
+    text-4xl font-extrabold
+    text-white dark:text-amber-400
+
+    dark:[text-shadow:0_0_1px_#22d3ee,0_0_1px_#22d3ee,0_0_1px_#22d3ee]
+
+    drop-shadow-[0_0_1px_rgba(34,211,238,0.7)]
+    transition-all duration-300
+  "
+>
+  IdeaVault
+</p>
           </div>
         </div>
-        <ul className={` hidden items-center gap-3 md:flex font-semibold text-xl text-black`}>
+        <ul className={` hidden items-center gap-3 md:flex font-semibold text-xl text-black dark:text-white`}>
           <li>
               <Link href="/" className="block py-2 ">
                 Home
@@ -77,6 +86,9 @@ const Navbar = () => {
           <Link href="/registration" className="cursor-pointer">
             <RegisterButton></RegisterButton>
           </Link>
+        </div>
+        <div>
+          <ThemeToggle></ThemeToggle>
         </div>
       </header>
 

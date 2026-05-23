@@ -2,31 +2,31 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-amber-400 border-t border-black mt-10">
+    <footer className="bg-amber-400 border-t border-black mt-10 dark:bg-[#737373]">
       <div className="max-w-6xl mx-auto px-6 py-10">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo */}
           <div>
-            <h1 className="text-4xl font-extrabold text-white [text-shadow:1px_1px_0px_#999,2px_2px_0px_#777]">
+            <h1 className="text-4xl font-extrabold text-white dark:text-amber-400 [text-shadow:1px_1px_0px_#999,2px_2px_0px_#777]">
               IdeaVault
             </h1>
-            <p className="text-black mt-2 text-sm font-medium">
+            <p className="text-black dark:text-white mt-2 text-sm font-medium">
               Share ideas. Build innovation. Validate together.
             </p>
           </div>
 
           {/* Links */}
           <div className="flex flex-col justify-center items-start">
-            <h2 className="text-xl font-bold text-black mb-3">Links</h2>
+            <h2 className="text-xl font-bold text-black dark:text-white mb-3">Links</h2>
             <ul className="space-y-2 font-medium">
               <li>
-                <Link href="/ideas" className="hover:underline text-black">
+                <Link href="/ideas" className="hover:underline text-black dark:text-white">
                   Ideas
                 </Link>
               </li>
               <li>
-                <Link href="/categories" className="hover:underline text-black">
+                <Link href="/categories" className="hover:underline text-black dark:text-white">
                   Categories
                 </Link>
               </li>
@@ -35,8 +35,8 @@ const Footer = () => {
 
           {/* Contact */}
           <div className="flex flex-col justify-center items-start">
-            <h2 className="text-xl font-bold text-black mb-3">Contact</h2>
-            <ul className="space-y-2 text-black font-medium">
+            <h2 className="text-xl font-bold text-black dark:text-white mb-3">Contact</h2>
+            <ul className="space-y-2 text-black dark:text-white font-medium">
               <li>Email: support@ideavault.com</li>
               <li>Phone: +880 123 456 789</li>
             </ul>
@@ -44,9 +44,9 @@ const Footer = () => {
 
           {/* Social */}
           <div className="flex flex-col justify-start items-start">
-            <h2 className="text-xl font-bold text-black mb-3">Stay Connected</h2>
+            <h2 className="text-xl font-bold text-black dark:text-white mb-3">Stay Connected</h2>
 
-            <div className="flex justify-center cursor-pointer text-black">
+            <div className="flex justify-center cursor-pointer text-black dark:text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="32"

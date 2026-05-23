@@ -1,4 +1,5 @@
 import { Montserrat } from "next/font/google";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -18,16 +19,19 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       className={`${montserrat.className} h-full antialiased`}
+      suppressHydrationWarning
     >
-      
       <body className="min-h-full flex flex-col">
-        <Navbar></Navbar>
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer></Footer>
-        </body>
-      
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Navbar />
+
+          <main className="flex-grow bg-[#f5deb3] dark:bg-[#737373]">
+            {children}
+          </main>
+
+          <Footer />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
