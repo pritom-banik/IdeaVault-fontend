@@ -66,7 +66,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link href="/" className="block py-2 ">
+            <Link href="/ideas" className="block py-2 ">
               Ideas
             </Link>
           </li>
@@ -104,7 +104,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/courses" className="block py-2  ">
+              <Link href="/ideas" className="block py-2  ">
                 Ideas
               </Link>
             </li>

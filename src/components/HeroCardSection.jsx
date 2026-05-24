@@ -5,6 +5,7 @@ import HeroIdeaCard from "./HeroIdeaCard";
 const HeroCardSection = async () => {
   const popularIdeas = await fetch(
     `${process.env.API_ENDPOINT}/ideas/getpopular`,
+    { cache: "no-store" }
   );
   const ideas = await popularIdeas.json();
   return (

@@ -3,22 +3,15 @@ import React, { useState } from "react";
 import { NormalButton } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const Searchbox = () => {
+const Searchbox = ({ setSearchTitle }) => {
   const [query, setQuery] = useState("");
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (query) {
-      params.set("title", query);
-    } else {
-      params.delete("title");
+    if (!query) {
+      return;
     }
-
-    router.push(`?${params.toString()}`);
+    setSearchTitle(query);
   };
 
   return (

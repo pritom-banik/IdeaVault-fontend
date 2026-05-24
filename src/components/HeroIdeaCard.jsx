@@ -17,8 +17,6 @@ const getSafeImage = (url) => {
 };
 
 const HeroIdeaCard = ({ idea }) => {
-  console.log("the url is : ");
-  console.log(getSafeImage(idea.imageUrl));
   return (
     <div
       key={idea._id}
