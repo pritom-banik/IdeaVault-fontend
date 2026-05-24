@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import { NormalButton } from "./Button";
+import Link from "next/link";
 
 const getSafeImage = (url) => {
   if (!url) return "/card-pic.png";
@@ -69,7 +70,9 @@ const HeroIdeaCard = ({ idea }) => {
 
         
         <div className=" cursor-pointer">
+          <Link href={`/ideas/${idea._id}`}>
           <NormalButton>View Details</NormalButton>
+          </Link>
         </div>
       </div>
     </div>
