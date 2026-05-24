@@ -6,9 +6,10 @@ import Loadingcard from "./Loadingcard";
 const IdeaApiCall = () => {
   const [title, setSearchTitle] = useState("");
   const [showAllIdea, setShowAllIdea] = useState(true);
-  const [categories, setSearchCategories] = useState([]);
+  const [searchcategories, setSearchCategories] = useState([]);
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [allCategories,setAllCategories]=useState([])
 
   useEffect(() => {
     const fetchIdeas = async () => {
@@ -16,8 +17,8 @@ const IdeaApiCall = () => {
 
       let url = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/ideas`;
 
-      if (categories.length > 0) {
-        url = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/ideas/filter?categories=${categories.join("&categories=")}`;
+      if (searchcategories.length > 0) {
+        url = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/ideas/filter?category=${searchcategories.join("&category=")}`;
       } else if (title) {
         url = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/ideas/search?title=${title}`;
       }
@@ -39,24 +40,46 @@ const IdeaApiCall = () => {
     };
 
     fetchIdeas();
-  }, [title, categories, showAllIdea]);
+  }, [title, searchcategories, showAllIdea]);
 
-  if (isLoading) return <Loadingcard></Loadingcard>;
+  
 
-  useEffect(()=>{
-    const allCategories=async()=>{
-        let url = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/ideas/categories`;
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/ideas/categories`,
+        );
 
-    }
-  })
+        if (!res.ok) {
+          setAllCategories([]);
+          return;
+        }
+
+        const data = await res.json();
+
+        setAllCategories(data);
+      } catch (err) {
+        console.error(err);
+        setAllCategories([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center">
       <AllIdeas
         data={data}
         setSearchTitle={setSearchTitle}
         setShowAllIdea={setShowAllIdea}
         setSearchCategories={setSearchCategories}
+        allCategories={allCategories}
+        searchcategories={searchcategories}
+        isLoading={isLoading}
       ></AllIdeas>
     </div>
   );

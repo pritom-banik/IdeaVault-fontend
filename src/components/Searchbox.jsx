@@ -8,9 +8,6 @@ const Searchbox = ({ setSearchTitle }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!query) {
-      return;
-    }
     setSearchTitle(query);
   };
 
