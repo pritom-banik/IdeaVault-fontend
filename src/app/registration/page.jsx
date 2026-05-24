@@ -6,6 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
 import { toast, Bounce } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { createAuthClient } from "better-auth/client";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -69,6 +70,13 @@ const RegisterForm = () => {
   };
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const authClient = createAuthClient();
+    const signInWithGoogle = async () => {
+      const data = await authClient.signIn.social({
+        provider: "google",
+      });
+    };
 
   return (
     <div className="flex my-5 items-center justify-center p-2">
@@ -196,6 +204,7 @@ const RegisterForm = () => {
           {/* Google Login */}
           <button
             type="button"
+            onClick={signInWithGoogle}
             className="cursor-pointer flex w-full items-center justify-center gap-3 border-4 border-black bg-white px-4 py-3 text-sm font-black uppercase text-black shadow-[2px_2px_0_#000] transition-all active:translate-y-1 active:shadow-none"
           >
             <FcGoogle size={24} />

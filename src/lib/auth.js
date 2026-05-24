@@ -15,4 +15,10 @@ export const auth = betterAuth({
   },user: {
     modelName: "users", 
   },
+  socialProviders: {
+        google: { 
+            clientId: process.env.GOOGLE_CLIENT_ID, 
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET, 
+        }, 
+    },
 });

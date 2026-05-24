@@ -7,6 +7,7 @@ import { authClient } from "@/lib/auth-client";
 import { toast, Bounce } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import { createAuthClient } from "better-auth/client";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -63,6 +64,13 @@ const LoginForm = () => {
     setTimeout(() => {
       router.push(callbackUrl);
     }, 2000);
+  };
+
+  const authClient = createAuthClient();
+  const signInWithGoogle = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
   };
 
   return (
@@ -171,6 +179,7 @@ const LoginForm = () => {
           {/* Google Login */}
           <button
             type="button"
+            onClick={signInWithGoogle}
             className="cursor-pointer flex w-full items-center justify-center gap-3 border-4 border-black bg-white px-4 py-3 text-sm font-black uppercase text-black shadow-[2px_2px_0_#000] transition-all active:translate-y-1 active:shadow-none"
           >
             <FcGoogle size={24} />
