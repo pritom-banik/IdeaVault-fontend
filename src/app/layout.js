@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
       className={`${montserrat.className} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col m-0">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
 

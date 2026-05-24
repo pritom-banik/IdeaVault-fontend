@@ -7,7 +7,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-separator  backdrop-blur-lg border border-black bg-[#ff66a3] dark:bg-[#737373]">
+    <nav className="sticky top-0 z-40 w-full backdrop-blur-lg border-b-4 border-black bg-[#ff66a3] dark:bg-[#737373]">
       <header className="mx-auto flex flex-overflow h-16 max-w-6xl items-center justify-between px-5">
         <div className={`flex items-center gap-4 `}>
           <button

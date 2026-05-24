@@ -7,12 +7,11 @@ import { useEffect } from 'react'
 
 export default function Error({ error, unstable_retry }) {
     useEffect(() => {
-        // Log the error to an error reporting service
         console.error(error)
     }, [error])
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center px-4 text-center">
+        <div className="min-h-screen flex flex-col items-center justify-center text-center">
             <Image
                 src="/error.png"
                 alt="Error"
