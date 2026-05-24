@@ -13,6 +13,7 @@ const baseStyle = `
   active:translate-x-[4px]
   active:translate-y-[4px]
   active:shadow-none
+  cursor-pointer
 `;
 
 export const LoginButton = ({ children = "Login", ...props }) => (

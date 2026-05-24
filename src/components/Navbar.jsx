@@ -8,7 +8,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-separator  backdrop-blur-lg border border-black bg-[#ff66a3] dark:bg-[#737373]">
-      <header className="mx-auto flex flex-overflow h-16 max-w-6xl items-center justify-between px-6">
+      <header className="mx-auto flex flex-overflow h-16 max-w-6xl items-center justify-between px-5">
         <div className={`flex items-center gap-4 `}>
           <button
             className="md:hidden cursor-pointer"
@@ -43,7 +43,7 @@ const Navbar = () => {
 
           <div className="flex items-center gap-3">
             <p
-  className="
+              className="
     text-4xl font-extrabold
     text-white dark:text-[#ff66a3]
 
@@ -52,33 +52,38 @@ const Navbar = () => {
     drop-shadow-[0_0_1px_rgba(34,211,238,0.7)]
     transition-all duration-300
   "
->
-  IdeaVault
-</p>
+            >
+              IdeaVault
+            </p>
           </div>
         </div>
-        <ul className={` hidden items-center gap-3 md:flex font-semibold text-xl text-black dark:text-white`}>
+        <ul
+          className={` hidden items-center gap-3 md:flex font-semibold text-xl text-black dark:text-white`}
+        >
           <li>
-              <Link href="/" className="block py-2 ">
-                Home
-              </Link>
-            </li>
+            <Link href="/" className="block py-2 ">
+              Home
+            </Link>
+          </li>
           <li>
-              <Link href="/" className="block py-2 ">
-                Ideas
-              </Link>
-            </li>
+            <Link href="/" className="block py-2 ">
+              Ideas
+            </Link>
+          </li>
           <li>
-              <Link href="/" className="block py-2 ">
-                My Ideas
-              </Link>
-            </li>
+            <Link href="/" className="block py-2 ">
+              My Ideas
+            </Link>
+          </li>
           <li>
-              <Link href="/" className="block py-2 ">
-                Share Ideas
-              </Link>
-            </li>
+            <Link href="/" className="block py-2 ">
+              Share Ideas
+            </Link>
+          </li>
         </ul>
+        <div>
+          <ThemeToggle></ThemeToggle>
+        </div>
         <div className="hidden sm:flex justify-between gap-2">
           <Link href="/login" className="cursor-pointer">
             <LoginButton></LoginButton>
@@ -86,9 +91,6 @@ const Navbar = () => {
           <Link href="/registration" className="cursor-pointer">
             <RegisterButton></RegisterButton>
           </Link>
-        </div>
-        <div>
-          <ThemeToggle></ThemeToggle>
         </div>
       </header>
 
@@ -117,10 +119,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="mt-4 flex flex-col gap-2 border-t border-separator pt-4">
-              <Link
-                href="/login"
-                className={` text-lg  py-2`}
-              >
+              <Link href="/login" className={` text-lg  py-2`}>
                 <LoginButton></LoginButton>
               </Link>
 

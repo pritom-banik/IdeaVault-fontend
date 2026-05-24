@@ -24,15 +24,15 @@ const HeroIdeaCard = ({ idea }) => {
       key={idea._id}
       className="group w-[320px] overflow-hidden rounded-none border-4 border-black bg-[#ff66a3] shadow-[8px_8px_0_#000] transition-all duration-200 hover:-translate-y-1 hover:shadow-[12px_12px_0_#000]"
     >
-      {/* Header */}
+      
       <div className="border-b-4 border-black bg-[#fff36d] px-3 py-1">
         <h2 className="text-xl font-black uppercase tracking-wide text-black">
           {idea.title}
         </h2>
       </div>
 
-      {/* Image */}
-      <div className="relative border-b-4 border-black bg-white dark:bg-[#9c9797]">
+      
+      <div className="relative border-b-4 border-black bg-[#9c9c9c] dark:bg-[#cecece]">
         <Image
           src={getSafeImage(idea.imageUrl)}
           alt={`${idea.title} solution image`}
@@ -41,15 +41,15 @@ const HeroIdeaCard = ({ idea }) => {
           className="w-full h-50 object-cover"
         />
 
-        {/* Category Badge */}
+        
         <div className="absolute left-3 top-3 border-2 text-black border-black bg-cyan-300 p-1 text-xs font-extrabold uppercase shadow-[3px_3px_0_#000]">
           {idea.category}
         </div>
       </div>
 
-      {/* Content */}
+     
       <div className="space-y-4 p-2 text-black">
-        {/* Problem */}
+        
         <div className="border-2 border-black bg-white p-2 shadow-[4px_4px_0_#000]">
           <h3 className="mb-2 text-sm font-black uppercase">Problem</h3>
 
@@ -58,7 +58,7 @@ const HeroIdeaCard = ({ idea }) => {
           </p>
         </div>
 
-        {/* Solution */}
+        
         <div className="border-2 border-black bg-[#caffbf] p-2 shadow-[4px_4px_0_#000]">
           <h3 className="mb-2 text-sm font-black uppercase">
             Proposed Solution
@@ -69,8 +69,8 @@ const HeroIdeaCard = ({ idea }) => {
           </p>
         </div>
 
-        {/* Button */}
-        <div className="pt-0.5">
+        
+        <div className=" cursor-pointer">
           <NormalButton>View Details</NormalButton>
         </div>
       </div>
