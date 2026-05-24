@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ToastContainer, toast,Bounce } from 'react-toastify';
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -24,6 +25,19 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col m-0">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
+          <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
 
           <main className="flex-grow bg-[#e8e8e8] dark:bg-[#737373]">
             {children}
