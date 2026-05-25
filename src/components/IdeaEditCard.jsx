@@ -146,7 +146,7 @@ const IdeaEditCard = ({ idea }) => {
 
       {/* TITLE */}
       <div className="border-b-4 border-black bg-[#fff36d] px-3 py-1">
-        <h2 className="text-xl font-black uppercase text-black">
+        <h2 className="text-xl font-black truncate uppercase text-black">
           {idea.title}
         </h2>
       </div>
@@ -288,7 +288,7 @@ const IdeaEditCard = ({ idea }) => {
                           </div>
                         </div>
 
-                        {/* FULL DESCRIPTION (READ ONLY LOOK BUT STILL EDITABLE) */}
+                        
                         <div>
                           <Label className="mb-2 block text-sm font-black uppercase text-black">
                             Detailed Description

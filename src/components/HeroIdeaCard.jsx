@@ -25,7 +25,7 @@ const HeroIdeaCard = ({ idea }) => {
     >
       
       <div className="border-b-4 border-black bg-[#fff36d] px-3 py-1">
-        <h2 className="text-xl font-black uppercase tracking-wide text-black">
+        <h2 className="text-xl font-black uppercase truncate tracking-wide text-black">
           {idea.title}
         </h2>
       </div>

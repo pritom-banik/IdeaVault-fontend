@@ -1,5 +1,8 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { CiBookmark } from "react-icons/ci";
+import { BsBookmarkCheckFill } from "react-icons/bs";
+import Comment from "@/components/Comment";
 
 const getIdea = async (id) => {
   const res = await fetch(`${process.env.API_ENDPOINT}/ideas/${id}`, {
@@ -7,19 +10,6 @@ const getIdea = async (id) => {
   });
 
   if (!res.ok) return null;
-
-  return res.json();
-};
-
-const getComments = async (id) => {
-  const res = await fetch(
-    `${process.env.API_ENDPOINT}/comments/${id}`,
-    {
-      cache: "no-store",
-    }
-  );
-
-  if (!res.ok) return [];
 
   return res.json();
 };
@@ -41,7 +31,7 @@ export default async function IdeaDetails({ params }) {
   const { id } = await params;
 
   const ideaData = await getIdea(id);
-const idea = ideaData[0];
+  const idea = ideaData[0];
 
   console.log(idea);
 
@@ -49,23 +39,22 @@ const idea = ideaData[0];
     notFound();
   }
 
-  const comments = await getComments(id);
-
   return (
     <div className="mx-auto max-w-6xl space-y-8 px-4 py-8">
-      
       {/* HERO SECTION */}
       <div className="border-4 border-black bg-[#ff66a3] shadow-[10px_10px_0_#000]">
-        
         {/* TOP */}
         <div className="border-b-4 border-black bg-[#fff36d] p-4">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            
             {/* LEFT */}
             <div className="space-y-3">
-              <h1 className="text-4xl font-black uppercase text-black">
-                {idea.title}
-              </h1>
+              <div className=" flex justify-center gap-2 text-4xl font-black uppercase text-black">
+                <h1>{idea.title}</h1>
+                <div>
+                  <CiBookmark />
+                  <BsBookmarkCheckFill />
+                </div>
+              </div>
 
               <p className="max-w-2xl text-sm font-bold text-black">
                 {idea.shortDescription}
@@ -73,17 +62,16 @@ const idea = ideaData[0];
 
               {/* META */}
               <div className="flex flex-wrap gap-3">
-                
-                <div className="border-2 text-black border-black bg-cyan-300 px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]">
+                <div className="border-2 text-black border-black bg-red-400 px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]">
                   {idea.category}
                 </div>
 
                 <div className="border-2 text-black border-black bg-white px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]">
-                  👀 {idea.views} Views
+                  {idea.views} Views
                 </div>
 
                 <div className="border-2 text-black border-black bg-[#caffbf] px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]">
-                  💰 ${idea.estimatedBudget}
+                  Budget {idea.estimatedBudget}/-
                 </div>
               </div>
             </div>
@@ -102,15 +90,12 @@ const idea = ideaData[0];
 
         {/* BOTTOM INFO */}
         <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-4">
-          
           <div>
             <p className="text-xs font-black uppercase text-gray-500">
               Created By
             </p>
 
-            <p className="text-lg font-black text-black">
-              {idea.author?.name}
-            </p>
+            <p className="text-lg font-black text-black">{idea.author?.name}</p>
           </div>
 
           <div>
@@ -122,15 +107,23 @@ const idea = ideaData[0];
               {new Date(idea.createdAt).toDateString()}
             </p>
           </div>
+
+          <div>
+            <p className="text-xs font-black uppercase text-gray-500">
+              Last Edited
+            </p>
+
+            <p className="font-bold text-black">
+              {new Date(idea.updatedAt).toDateString()}
+            </p>
+          </div>
         </div>
       </div>
 
       {/* MAIN GRID */}
       <div className="grid gap-6 lg:grid-cols-3">
-        
         {/* LEFT CONTENT */}
         <div className="space-y-6 lg:col-span-2">
-          
           {/* PROBLEM */}
           <div className="border-4 border-black bg-pink-100 p-5 shadow-[6px_6px_0_#000]">
             <h2 className="mb-3 text-2xl font-black uppercase text-black">
@@ -163,74 +156,10 @@ const idea = ideaData[0];
               {idea.detailedDescription}
             </p>
           </div>
-
-          {/* COMMENTS */}
-          <div className="border-4 border-black bg-white shadow-[6px_6px_0_#000]">
-            
-            {/* HEADER */}
-            <div className="border-b-4 border-black bg-[#fff36d] p-4">
-              <h2 className="text-2xl font-black uppercase text-black">
-                Comments ({comments.length})
-              </h2>
-            </div>
-
-            {/* COMMENT INPUT UI */}
-            <div className="border-b-4 border-black bg-pink-50 p-4">
-              <textarea
-                placeholder="Write your comment..."
-                className="min-h-[120px] w-full resize-none border-4 border-black bg-white p-3 font-semibold text-black outline-none shadow-[4px_4px_0_#000]"
-              />
-
-              <button
-                type="button"
-                className="mt-4 border-4 border-black bg-[#ff66a3] px-5 py-2 text-sm font-black uppercase text-black shadow-[4px_4px_0_#000] transition-all hover:-translate-y-1"
-              >
-                Post Comment
-              </button>
-            </div>
-
-            {/* COMMENT LIST */}
-            <div className="space-y-4 p-4">
-              {comments.length > 0 ? (
-                comments.map((comment) => (
-                  <div
-                    key={comment._id}
-                    className="border-4 border-black bg-cyan-50 p-4 shadow-[4px_4px_0_#000]"
-                  >
-                    <div className="mb-2 flex items-center justify-between gap-3">
-                      
-                      <h4 className="text-sm font-black uppercase text-black">
-                        {comment.author?.name}
-                      </h4>
-
-                      {comment.updatedAt && (
-                        <span className="text-xs font-bold text-gray-600">
-                          {new Date(
-                            comment.updatedAt
-                          ).toDateString()}
-                        </span>
-                      )}
-                    </div>
-
-                    <p className="font-medium leading-relaxed text-black">
-                      {comment.comment}
-                    </p>
-                  </div>
-                ))
-              ) : (
-                <div className="border-4 border-dashed border-black bg-gray-100 p-6 text-center">
-                  <p className="font-black uppercase text-black">
-                    No comments yet
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
         </div>
 
         {/* SIDEBAR */}
         <div className="space-y-6">
-          
           {/* TAGS */}
           <div className="border-4 border-black bg-[#fff36d] p-5 shadow-[6px_6px_0_#000]">
             <h3 className="mb-4 text-2xl font-black uppercase text-black">
@@ -241,7 +170,7 @@ const idea = ideaData[0];
               {idea.tags?.map((tag) => (
                 <span
                   key={tag}
-                  className="border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]"
+                  className="border-2 text-black border-black bg-sky-400 px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]"
                 >
                   #{tag}
                 </span>
@@ -267,7 +196,6 @@ const idea = ideaData[0];
             </h3>
 
             <div className="space-y-3">
-              
               <div className="border-2 border-black bg-white p-3">
                 <p className="text-xs font-black uppercase text-gray-500">
                   Budget
@@ -283,22 +211,13 @@ const idea = ideaData[0];
                   Views
                 </p>
 
-                <p className="text-lg font-black text-black">
-                  {idea.views}
-                </p>
-              </div>
-
-              <div className="border-2 border-black bg-white p-3">
-                <p className="text-xs font-black uppercase text-gray-500">
-                  Comments
-                </p>
-
-                <p className="text-lg font-black text-black">
-                  {comments.length}
-                </p>
+                <p className="text-lg font-black text-black">{idea.views}</p>
               </div>
             </div>
           </div>
+
+          {/* COMMENTS */}
+          <Comment postId={id}></Comment>
         </div>
       </div>
     </div>

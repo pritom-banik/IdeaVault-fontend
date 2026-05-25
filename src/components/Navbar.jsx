@@ -137,7 +137,7 @@ const Navbar = () => {
                       href="/interactions"
                       className="text-[#ff66a3] font-bold block h-full w-full"
                     >
-                      Interaction
+                      Interactions
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item id="logout" textValue="logout">
