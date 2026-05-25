@@ -72,11 +72,11 @@ const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const authClient = createAuthClient();
-    const signInWithGoogle = async () => {
-      const data = await authClient.signIn.social({
-        provider: "google",
-      });
-    };
+  const signInWithGoogle = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+  };
 
   return (
     <div className="flex my-5 items-center justify-center p-2">
