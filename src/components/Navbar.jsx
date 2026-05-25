@@ -9,7 +9,7 @@ import { Avatar, Button, Dropdown, Label } from "@heroui/react";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session, isPending } = authClient.useSession();
-  console.log("The sessiion info : ", session);
+  //console.log("The sessiion info : ", session);
   const user = session?.user;
   return (
     <nav className="sticky top-0 z-40 w-full backdrop-blur-lg border-b-4 border-black bg-[#ff66a3] dark:bg-[#737373]">
@@ -78,12 +78,12 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link href="/" className="block py-2 ">
+            <Link href="/myideas" className="block py-2 ">
               My Ideas
             </Link>
           </li>
           <li>
-            <Link href="/" className="block py-2 ">
+            <Link href="/shareideas" className="block py-2 ">
               Share Ideas
             </Link>
           </li>
@@ -96,7 +96,9 @@ const Navbar = () => {
           <span className="loading loading-spinner text-success"></span>
         ) : user ? (
           <div className="flex items-center gap-2 cursor-pointer">
-            <h1 className={`text-black font-semibold text-lg hidden sm:block`}>{user.name}</h1>
+            <h1 className={`text-black font-semibold text-lg hidden sm:block`}>
+              {user.name}
+            </h1>
 
             <Dropdown>
               <Dropdown.Trigger>
@@ -109,20 +111,34 @@ const Navbar = () => {
 
               <Dropdown.Popover>
                 <Dropdown.Menu
-                onAction={async (key) => {
+                  onAction={async (key) => {
                     if (key === "logout") {
                       await authClient.signOut();
                       window.location.reload();
                     }
-                  }}>
+                  }}
+                >
                   <Dropdown.Item>
-                    <Link href="/profile" className="text-[#ff66a3] font-bold">Profile</Link>
+                    <Link href="/profile" 
+                    className="text-[#ff66a3] font-bold block h-full w-full">
+                      Profile
+                    </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <Link href="/bookmarks" className="text-[#ff66a3] font-bold">BookMarks</Link>
+                    <Link
+                      href="/bookmarks"
+                      className="text-[#ff66a3] font-bold block h-full w-full"
+                    >
+                      BookMarks
+                    </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <Link href="/interactions" className="text-[#ff66a3] font-bold">Interaction</Link>
+                    <Link
+                      href="/interactions"
+                      className="text-[#ff66a3] font-bold block h-full w-full"
+                    >
+                      Interaction
+                    </Link>
                   </Dropdown.Item>
                   <Dropdown.Item id="logout" textValue="logout">
                     <Label>Log out</Label>
@@ -158,12 +174,12 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/profile" className="block py-2 ">
+              <Link href="/myideas" className="block py-2 ">
                 My Ideas
               </Link>
             </li>
             <li>
-              <Link href="/" className="block py-2 ">
+              <Link href="/shareideas" className="block py-2 ">
                 Share Ideas
               </Link>
             </li>

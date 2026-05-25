@@ -74,15 +74,15 @@ const idea = ideaData[0];
               {/* META */}
               <div className="flex flex-wrap gap-3">
                 
-                <div className="border-2 border-black bg-cyan-300 px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]">
+                <div className="border-2 text-black border-black bg-cyan-300 px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]">
                   {idea.category}
                 </div>
 
-                <div className="border-2 border-black bg-white px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]">
+                <div className="border-2 text-black border-black bg-white px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]">
                   👀 {idea.views} Views
                 </div>
 
-                <div className="border-2 border-black bg-[#caffbf] px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]">
+                <div className="border-2 text-black border-black bg-[#caffbf] px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]">
                   💰 ${idea.estimatedBudget}
                 </div>
               </div>

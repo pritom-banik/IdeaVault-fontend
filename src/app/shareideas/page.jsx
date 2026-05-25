@@ -35,7 +35,7 @@ const ShareIdeaPage = () => {
       targetAudience: formData.get("targetAudience"),
       problemStatement: formData.get("problemStatement"),
       proposedSolution: formData.get("proposedSolution"),
-      userId: user._id,
+      userId: user.id,
     };
 
     console.log(ideaData);

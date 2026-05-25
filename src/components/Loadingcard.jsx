@@ -2,13 +2,12 @@ const Loadingcard = () => {
   return (
     <div className="max-w-6xl mx-auto my-10">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-6 justify-items-center">
-
         {[1, 2, 3, 4, 5, 6].map((item) => (
           <div
             key={item}
             className="
               w-[320px]
-              bg-[#fff6e9]
+              bg-[#fff6e9]/10
               border-[3px]
               border-black
               shadow-[6px_6px_0px_#000]
@@ -30,12 +29,6 @@ const Loadingcard = () => {
               <div className="h-4 w-full bg-gray-300 border border-black"></div>
               <div className="h-4 w-5/6 bg-gray-300 border border-black"></div>
               <div className="h-4 w-4/6 bg-gray-300 border border-black"></div>
-            </div>
-
-            {/* footer */}
-            <div className="mt-6 flex justify-between items-center">
-              <div className="h-8 w-20 bg-[#66d9ff] border-2 border-black"></div>
-              <div className="h-8 w-8 rounded-full bg-[#9bff66] border-2 border-black"></div>
             </div>
           </div>
         ))}
