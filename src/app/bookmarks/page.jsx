@@ -72,7 +72,7 @@ const Page = () => {
         {bookmarks.map((bookmark) => (
           <div
             key={bookmark._id}
-            className="relative group w-[320px] h-[320px] overflow-hidden border-4 border-black bg-[#ff66a3] shadow-[8px_8px_0_#000] transition-all duration-200 "
+            className="relative group w-[320px] overflow-hidden border-4 border-black bg-[#ff66a3] shadow-[8px_8px_0_#000] transition-all duration-200 "
           >
             {/* TITLE */}
             <div className="border-b-4 border-black bg-[#fff36d] px-3 py-1">
@@ -95,7 +95,7 @@ const Page = () => {
                 <h3 className="mb-1 text-sm font-black uppercase">
                   Description
                 </h3>
-                <p className="text-sm font-medium line-clamp-4">
+                <p className="h-20 text-sm font-medium line-clamp-4">
                   {bookmark.shortDescription}
                 </p>
               </div>

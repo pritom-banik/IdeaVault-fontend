@@ -52,7 +52,7 @@ const HeroIdeaCard = ({ idea }) => {
         <div className="border-2 border-black bg-white p-2 shadow-[4px_4px_0_#000]">
           <h3 className="mb-2 text-sm font-black uppercase">Problem</h3>
 
-          <p className="line-clamp-3 text-sm font-medium leading-relaxed">
+          <p className="h-10 line-clamp-2 text-sm font-medium leading-relaxed">
             {idea.problemStatement}
           </p>
         </div>
@@ -63,7 +63,7 @@ const HeroIdeaCard = ({ idea }) => {
             Proposed Solution
           </h3>
 
-          <p className="line-clamp-4 text-sm font-medium leading-relaxed">
+          <p className="h-12 line-clamp-2 text-sm font-medium leading-relaxed">
             {idea.shortDescription}
           </p>
         </div>

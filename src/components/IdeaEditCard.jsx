@@ -170,7 +170,7 @@ const IdeaEditCard = ({ idea }) => {
       <div className="space-y-4 p-2 text-black">
         <div className="border-2 border-black bg-white p-2 shadow-[4px_4px_0_#000]">
           <h3 className="mb-2 text-sm font-black uppercase">Problem</h3>
-          <p className="line-clamp-3 text-sm font-medium">
+          <p className="h-10 line-clamp-2 text-sm font-medium">
             {idea.problemStatement}
           </p>
         </div>
@@ -179,7 +179,7 @@ const IdeaEditCard = ({ idea }) => {
           <h3 className="mb-2 text-sm font-black uppercase">
             Proposed Solution
           </h3>
-          <p className="line-clamp-4 text-sm font-medium">
+          <p className="h-12 line-clamp-2 text-sm font-medium">
             {idea.shortDescription}
           </p>
         </div>
