@@ -3,10 +3,9 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { authClient } from "@/lib/auth-client";
 import { toast, Bounce } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { createAuthClient } from "better-auth/client";
+import { authClient } from "@/lib/auth-client";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -44,7 +43,9 @@ const RegisterForm = () => {
             theme: "light",
             transition: Bounce,
           });
-          setTimeout(() => {
+          setTimeout(async () => {
+            await authClient.getSession();
+            router.refresh();
             router.push("/");
           }, 2000);
         },
@@ -71,7 +72,6 @@ const RegisterForm = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const authClient = createAuthClient();
   const signInWithGoogle = async () => {
     const data = await authClient.signIn.social({
       provider: "google",
