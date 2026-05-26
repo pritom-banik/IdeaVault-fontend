@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { CiBookmark } from "react-icons/ci";
-import { BsBookmarkCheckFill } from "react-icons/bs";
+
 import Comment from "@/components/Comment";
+import AddBookmark from "@/components/AddBookmark";
 
 const getIdea = async (id) => {
   const res = await fetch(`${process.env.API_ENDPOINT}/ideas/${id}`, {
@@ -50,10 +50,6 @@ export default async function IdeaDetails({ params }) {
             <div className="space-y-3">
               <div className=" flex justify-center gap-2 text-4xl font-black uppercase text-black">
                 <h1>{idea.title}</h1>
-                <div>
-                  <CiBookmark />
-                  <BsBookmarkCheckFill />
-                </div>
               </div>
 
               <p className="max-w-2xl text-sm font-bold text-black">
@@ -72,6 +68,9 @@ export default async function IdeaDetails({ params }) {
 
                 <div className="border-2 text-black border-black bg-[#caffbf] px-3 py-1 text-xs font-black uppercase shadow-[3px_3px_0_#000]">
                   Budget {idea.estimatedBudget}/-
+                </div>
+                <div>
+                  <AddBookmark ideaId={idea._id}></AddBookmark>
                 </div>
               </div>
             </div>
