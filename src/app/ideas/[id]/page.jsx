@@ -3,11 +3,25 @@ import { notFound } from "next/navigation";
 
 import Comment from "@/components/Comment";
 import AddBookmark from "@/components/AddBookmark";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const getIdea = async (id) => {
-  const res = await fetch(`${process.env.API_ENDPOINT}/ideas/${id}`, {
-    cache: "no-store",
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
   });
+
+  const res = await fetch(
+    `${process.env.API_ENDPOINT}/ideas/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    {
+      cache: "no-store",
+    },
+  );
 
   if (!res.ok) return null;
 

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { NormalButton } from "./Button";
 import Link from "next/link";
 import { Button, Input, Label, Modal, Surface } from "@heroui/react";
+import { authClient } from "@/lib/auth-client";
 
 const getSafeImage = (url) => {
   if (!url) return "/card-pic.png";
@@ -22,6 +23,16 @@ const IdeaEditCard = ({ idea }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [modalIdea, setModalIdea] = useState({});
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const res = await authClient.token?.();
+      setToken(res?.data?.token);
+    };
+
+    fetchToken();
+  }, []);
 
   useEffect(() => {
     if (!idea?._id || !showDetails) return;
@@ -30,6 +41,11 @@ const IdeaEditCard = ({ idea }) => {
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/ideas/${idea._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
 
         if (!res.ok) return;
@@ -42,7 +58,7 @@ const IdeaEditCard = ({ idea }) => {
     };
 
     fetchIdea();
-  }, [showDetails, idea?._id]);
+  }, [showDetails, idea?._id, token]);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -51,7 +67,18 @@ const IdeaEditCard = ({ idea }) => {
 
     const updatedData = {
       title: form.get("title"),
+      shortDescription: form.get("shortDescription"),
+      problemStatement: form.get("problemStatement"),
+      category: form.get("category"),
+      estimatedBudget: form.get("estimatedBudget"),
+      detailedDescription: form.get("detailedDescription"),
+      tags: form
+        .get("tags")
+        ?.split(",")
+        .map((tag) => tag.trim()),
       imageUrl: form.get("imageUrl"),
+      targetAudience: form.get("targetAudience"),
+      proposedSolution: form.get("proposedSolution"),
     };
 
     try {
@@ -61,19 +88,23 @@ const IdeaEditCard = ({ idea }) => {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(updatedData),
         },
       );
 
-      if (!res.ok) throw new Error("Update failed");
-
-      window.location.reload();
+      if (!res.ok) {
+        throw new Error("Update failed");
+      }
 
       const data = await res.json();
+
       console.log("Updated:", data);
 
       setShowDetails(false);
+
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -85,6 +116,7 @@ const IdeaEditCard = ({ idea }) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           ideaId: idea._id,
@@ -288,7 +320,6 @@ const IdeaEditCard = ({ idea }) => {
                           </div>
                         </div>
 
-                        
                         <div>
                           <Label className="mb-2 block text-sm font-black uppercase text-black">
                             Detailed Description
@@ -300,8 +331,6 @@ const IdeaEditCard = ({ idea }) => {
                             className="w-full min-h-[140px] border-4 border-black bg-white p-2 font-semibold text-black"
                           />
                         </div>
-
-                        
 
                         {/* TAGS */}
                         <div>
@@ -343,8 +372,6 @@ const IdeaEditCard = ({ idea }) => {
                             className="w-full min-h-[80px] border-4 border-black bg-white p-2 font-semibold text-black"
                           />
                         </div>
-
-                        
 
                         {/* PROPOSED SOLUTION */}
                         <div>

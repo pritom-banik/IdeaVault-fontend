@@ -15,9 +15,19 @@ const Page = () => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deletePostId, setDeletePostId] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    if (!user) return;
+    const fetchToken = async () => {
+      const res = await authClient.token?.();
+      setToken(res?.data?.token);
+    };
+
+    fetchToken();
+  }, []);
+
+  useEffect(() => {
+    if (!user || !token) return;
 
     const fetchBookmarks = async () => {
       setLoading(true);
@@ -25,6 +35,11 @@ const Page = () => {
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/bookmarks/${user.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
 
         const data = await res.json();
@@ -37,10 +52,11 @@ const Page = () => {
     };
 
     fetchBookmarks();
-  }, [user]);
+  }, [user, token]);
 
   // delete bookmark
   const handleRemoveBookmark = async () => {
+    if (!user || !token) return;
     try {
       const bookmarkData = {
         postId: deletePostId,
@@ -52,6 +68,7 @@ const Page = () => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(bookmarkData),
         },

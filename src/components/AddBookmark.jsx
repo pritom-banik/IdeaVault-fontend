@@ -8,6 +8,16 @@ import { authClient } from "@/lib/auth-client";
 const AddBookmark = ({ ideaId }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmarkId, setBookmarkId] = useState(null);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const res = await authClient.token?.();
+      setToken(res?.data?.token);
+    };
+
+    fetchToken();
+  }, []);
 
   const { data: session } = authClient.useSession();
   const user = session?.user;
@@ -20,6 +30,11 @@ const AddBookmark = ({ ideaId }) => {
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/bookmarks/isbookmarked?ideaId=${ideaId}&userId=${user.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
 
         const data = await res.json();
@@ -48,6 +63,7 @@ const AddBookmark = ({ ideaId }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             postId: ideaId,
@@ -79,6 +95,7 @@ const AddBookmark = ({ ideaId }) => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(bookmarkData),
         },

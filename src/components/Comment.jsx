@@ -11,6 +11,16 @@ const Comment = ({ postId }) => {
   const [openMenuId, setOpenMenuId] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const res = await authClient.token?.();
+      setToken(res?.data?.token);
+    };
+
+    fetchToken();
+  }, []);
 
   const toggleMenu = (id) => {
     setOpenMenuId((prev) => (prev === id ? null : id));
@@ -22,6 +32,11 @@ const Comment = ({ postId }) => {
 
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/comments/post/${postId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
         {
           cache: "no-store",
         },
@@ -45,7 +60,7 @@ const Comment = ({ postId }) => {
     if (!postId) return;
 
     fetchComments();
-  }, [postId]);
+  }, [postId, token]);
 
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
@@ -67,6 +82,7 @@ const Comment = ({ postId }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(commentInfo),
         },
@@ -129,6 +145,7 @@ const Comment = ({ postId }) => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ commentId: id }),
         },
@@ -206,6 +223,7 @@ const Comment = ({ postId }) => {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(updatedData),
         },

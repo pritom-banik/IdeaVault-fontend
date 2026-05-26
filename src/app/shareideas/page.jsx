@@ -1,17 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { toast, Bounce } from "react-toastify";
 
 const ShareIdeaPage = () => {
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState(null);
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  useEffect(() => {
+    const fetchToken = async () => {
+      const res = await authClient.token?.();
+      setToken(res?.data?.token);
+    };
+
+    fetchToken();
+  }, []);
+
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
   const handleSubmit = async (e) => {
+    if (!token) {
+      return;
+    }
     e.preventDefault();
 
     setLoading(true);
@@ -45,6 +57,7 @@ const ShareIdeaPage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(ideaData),
       });
@@ -55,16 +68,16 @@ const ShareIdeaPage = () => {
 
       if (res.ok) {
         toast.success("Idea shared successfully!", {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: false,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              transition: Bounce,
-            });
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
         form.reset();
       }
     } catch (error) {

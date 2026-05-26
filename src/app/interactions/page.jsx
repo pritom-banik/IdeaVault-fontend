@@ -12,6 +12,16 @@ const InteractionComment = () => {
   const [comments, setComment] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedComment, setSelectedComment] = useState(null);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const res = await authClient.token?.();
+      setToken(res?.data?.token);
+    };
+
+    fetchToken();
+  }, []);
 
   const fetchComments = async () => {
     try {
@@ -19,6 +29,11 @@ const InteractionComment = () => {
 
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/comments/user/${user.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
         { cache: "no-store" },
       );
 
@@ -37,11 +52,14 @@ const InteractionComment = () => {
   };
 
   useEffect(() => {
-    if (!user?.id) return;
+    if (!user?.id || !token) return;
     fetchComments();
-  }, [user]);
+  }, [user, token]);
 
   const deleteComment = async (id) => {
+    if (!token) {
+      return;
+    }
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/comments`,
@@ -49,6 +67,7 @@ const InteractionComment = () => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ commentId: id }),
         },
@@ -97,6 +116,9 @@ const InteractionComment = () => {
   };
 
   const handleUpdate = async (e) => {
+    if (!token) {
+      return;
+    }
     e.preventDefault();
 
     try {
@@ -112,6 +134,7 @@ const InteractionComment = () => {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(updatedData),
         },

@@ -12,14 +12,29 @@ const MyIdeas = () => {
 
   const [ideas, setIdeas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    if (!session?.user?.id) return;
+    const fetchToken = async () => {
+      const res = await authClient.token?.();
+      setToken(res?.data?.token);
+    };
+
+    fetchToken();
+  }, []);
+
+  useEffect(() => {
+    if (!session?.user?.id||!token) return;
 
     const fetchIdeas = async () => {
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/ideas/user/${session.user.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
 
         const data = await res.json();
@@ -34,7 +49,7 @@ const MyIdeas = () => {
     };
 
     fetchIdeas();
-  }, [session]);
+  }, [session, token]);
 
   return (
     <div className="max-w-6xl mx-auto flex flex-col justify-around items-center">

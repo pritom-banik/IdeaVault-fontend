@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginButton, RegisterButton } from "@/components/Button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { authClient } from "@/lib/auth-client";
@@ -9,8 +9,9 @@ import { Avatar, Button, Dropdown, Label } from "@heroui/react";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session, isPending } = authClient.useSession();
-  //console.log("The sessiion info : ", session);
+  console.log("The sessiion info : ", session);
   const user = session?.user;
+
   return (
     <nav className="sticky top-0 z-40 w-full backdrop-blur-lg border-b-4 border-black bg-[#ff66a3] dark:bg-[#737373]">
       <header className="mx-auto flex flex-overflow h-16 max-w-6xl items-center justify-between px-5">
