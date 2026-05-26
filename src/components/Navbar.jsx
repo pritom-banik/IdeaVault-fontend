@@ -5,12 +5,15 @@ import { LoginButton, RegisterButton } from "@/components/Button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { authClient } from "@/lib/auth-client";
 import { Avatar, Button, Dropdown, Label } from "@heroui/react";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session, isPending } = authClient.useSession();
   console.log("The sessiion info : ", session);
   const user = session?.user;
+
+  const pathname = usePathname();
 
   return (
     <nav className="sticky top-0 z-40 w-full backdrop-blur-lg border-b-4 border-black bg-[#ff66a3] dark:bg-[#737373]">
@@ -69,22 +72,44 @@ const Navbar = () => {
           className={` hidden items-center gap-3 md:flex font-semibold text-xl text-black dark:text-white`}
         >
           <li>
-            <Link href="/" className="block py-2 ">
+            <Link
+              href="/"
+              className={`block py-2 transition-all duration-300 hover:scale-110 hover:underline hover:font-black ${
+                pathname === "/" ? "underline scale-110 font-bold" : ""
+              }`}
+            >
               Home
             </Link>
           </li>
           <li>
-            <Link href="/ideas" className="block py-2 ">
+            <Link
+              href="/ideas"
+              className={`block py-2 transition-all duration-300 hover:scale-110 hover:underline hover:font-black ${
+                pathname === "/ideas" ? "underline scale-110 font-bold" : ""
+              }`}
+            >
               Ideas
             </Link>
           </li>
           <li>
-            <Link href="/myideas" className="block py-2 ">
+            <Link
+              href="/myideas"
+              className={`block py-2 transition-all duration-300 hover:scale-110 hover:underline hover:font-black ${
+                pathname === "/myideas" ? "underline scale-110 font-bold" : ""
+              }`}
+            >
               My Ideas
             </Link>
           </li>
           <li>
-            <Link href="/shareideas" className="block py-2 ">
+            <Link
+              href="/shareideas"
+              className={`block py-2 transition-all duration-300 hover:scale-110 hover:underline hover:font-black ${
+                pathname === "/shareideas"
+                  ? "underline scale-110 font-bold"
+                  : ""
+              }`}
+            >
               Share Ideas
             </Link>
           </li>
@@ -120,8 +145,10 @@ const Navbar = () => {
                   }}
                 >
                   <Dropdown.Item>
-                    <Link href="/profile" 
-                    className="text-[#ff66a3] font-bold block h-full w-full">
+                    <Link
+                      href="/profile"
+                      className="text-[#ff66a3] font-bold block h-full w-full"
+                    >
                       Profile
                     </Link>
                   </Dropdown.Item>
