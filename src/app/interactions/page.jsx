@@ -54,7 +54,6 @@ const InteractionComment = () => {
         },
       );
 
-
       if (res.ok) {
         toast.success("Comment Deletion Successful!", {
           position: "top-center",
@@ -97,50 +96,48 @@ const InteractionComment = () => {
     }
   };
 
+  const handleUpdate = async (e) => {
+    e.preventDefault();
 
- const handleUpdate = async (e) => {
-  e.preventDefault();
+    try {
+      const form = new FormData(e.target);
 
-  try {
-    const form = new FormData(e.target);
+      const updatedData = {
+        comment: form.get("comment"),
+      };
 
-    const updatedData = {
-      comment: form.get("comment"),
-    };
-
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/comments/${selectedComment._id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/comments/${selectedComment._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedData),
         },
-        body: JSON.stringify(updatedData),
-      },
-    );
-
-    const data = await res.json();
-
-    if (res.ok) {
-      toast.success("Comment updated successfully!");
-      setComment((prev) =>
-        prev.map((c) =>
-          c._id === selectedComment._id
-            ? { ...c, comment: updatedData.comment }
-            : c
-        )
       );
 
-      setSelectedComment(null);
-    } else {
-      toast.error(data.message || "Update failed");
-    }
-  } catch (error) {
-    console.error(error);
-    toast.error("Something went wrong...");
-  }
-};
+      const data = await res.json();
 
+      if (res.ok) {
+        toast.success("Comment updated successfully!");
+        setComment((prev) =>
+          prev.map((c) =>
+            c._id === selectedComment._id
+              ? { ...c, comment: updatedData.comment }
+              : c,
+          ),
+        );
+
+        setSelectedComment(null);
+      } else {
+        toast.error(data.message || "Update failed");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong...");
+    }
+  };
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -157,7 +154,7 @@ const InteractionComment = () => {
 
       {/* TABLE WRAPPER */}
       <div className="w-full max-w-5xl mx-auto overflow-x-auto my-10">
-        <div className="min-w-[900px]">
+        <div className="min-w-225">
           <table className="w-full table-fixed border-4 border-black bg-white shadow-[3px_3px_0_#000]">
             {/* HEAD */}
             <thead>
@@ -221,9 +218,10 @@ const InteractionComment = () => {
                   {/* EDIT */}
                   <td className="w-[160px] px-4 py-4 text-center">
                     <Modal>
-                      <Button 
-                       onClick={() => setSelectedComment(comment)}
-                      className="rounded-none border-2 text-black border-black hover:bg-green-500 bg-green-400 px-3 py-2 text-xs font-black uppercase shadow-[2px_2px_0_#000]">
+                      <Button
+                        onClick={() => setSelectedComment(comment)}
+                        className="rounded-none border-2 text-black border-black hover:bg-green-500 bg-green-400 px-3 py-2 text-xs font-black uppercase shadow-[2px_2px_0_#000]"
+                      >
                         Edit
                       </Button>
 
@@ -241,8 +239,9 @@ const InteractionComment = () => {
                             <Modal.Body className="bg-[#e8e8e8] p-5">
                               <Surface className="border-none bg-transparent shadow-none">
                                 <form
-                                onSubmit={handleUpdate}
-                                 className="space-y-5">
+                                  onSubmit={handleUpdate}
+                                  className="space-y-5"
+                                >
                                   <div>
                                     <Label className="mb-2 block text-sm font-black uppercase text-black">
                                       Comment

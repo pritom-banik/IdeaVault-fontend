@@ -12,7 +12,6 @@ const MyIdeas = () => {
 
   const [ideas, setIdeas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showblank, setshowblank] = useState(false);
 
   useEffect(() => {
     if (!session?.user?.id) return;
@@ -22,17 +21,11 @@ const MyIdeas = () => {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/ideas/user/${session.user.id}`,
         );
-        if (res.status == 404 || res.status == 500) {
-          setshowblank(true);
-        }
 
         const data = await res.json();
         //console.log(data);
 
         setIdeas(data);
-        if (ideas.length === 0) {
-          setshowblank(true);
-        }
       } catch (error) {
         console.error(error);
       } finally {
@@ -57,10 +50,10 @@ const MyIdeas = () => {
         </h1>{" "}
       </div>{" "}
       <div className="w-full h-px bg-black dark:bg-gray-300 my-4"></div>
-      {showblank ? (
-        <BlankSection></BlankSection>
-      ) : loading ? (
+      {loading ? (
         <Loadingcard></Loadingcard>
+      ) : ideas.length === 0 ? (
+        <BlankSection></BlankSection>
       ) : (
         <div className="max-w-6xl mx-auto my-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-5 justify-items-center mx-1">

@@ -226,7 +226,7 @@ const ProfilePage = () => {
                 My BookMarks
               </div>
             </Link>
-            <Link href="/ineractions">
+            <Link href="/interactions">
               <div className="bg-[#ff66a3] hover:bg-green-500 border-4 border-black p-1 cursor-pointer hover:underline active:translate-x-0.5 active:translate-y-0.5 transition-all">
                 My Interactions
               </div>
