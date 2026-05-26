@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session, isPending } = authClient.useSession();
-  console.log("The sessiion info : ", session);
+  // console.log("The sessiion info : ", session);
   const user = session?.user;
 
   const pathname = usePathname();
