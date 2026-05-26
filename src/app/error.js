@@ -27,7 +27,7 @@ export default function Error({ error, unstable_retry }) {
 
             <Link
                 href="/"
-                className="mt-2 inline-block bg-[#ff66a3] text-black font-bold px-6 py-3 shadow-md hover:bg-sky-400 border-2 border-black transition"
+                className="mt-2 inline-block bg-[#ff66a3] text-black font-black uppercase px-6 py-3 hover:bg-sky-400 border-4 border-black shadow-[4px_4px_0_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all duration-700 ease-out select-none"
             >
                 Return Home
             </Link>

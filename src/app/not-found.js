@@ -25,7 +25,7 @@ export default function NotFound() {
 
             <Link
                 href="/"
-                className="mt-6 inline-block bg-[#2B788B] text-white px-6 py-3 rounded-full shadow-md hover:bg-[#24697a] transition"
+                className="mt-6 inline-block bg-[#2B788B] text-white px-6 py-3 rounded-full hover:bg-[#24697a] shadow-[4px_4px_0_#000] transition"
             >
                 Return Home
             </Link>
