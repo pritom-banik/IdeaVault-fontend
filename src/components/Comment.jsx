@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import { toast, Bounce } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
 import { CiMenuKebab } from "react-icons/ci";
+import { Button, Input, Label, Modal, Surface } from "@heroui/react";
 
 const Comment = ({ postId }) => {
   const [comments, setComment] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openMenuId, setOpenMenuId] = useState(null);
+  const [showDetails, setShowDetails] = useState(false);
+  const [selectedComment, setSelectedComment] = useState(null);
 
   const toggleMenu = (id) => {
     setOpenMenuId((prev) => (prev === id ? null : id));
@@ -104,10 +107,35 @@ const Comment = ({ postId }) => {
     }
   };
 
+  const deleteComment = async (id, userId) => {
+    if (userId !== user.id) {
+      toast.error("You are not comment author !", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/comments`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ commentId: id }),
+        },
+      );
 
-  const deleteComment = async (id,userId) => {
-    if(userId!==user.id){
-toast.error("Only Comment Author Can Delete The Comment !", {
+      if (res.ok) {
+        toast.success("Comment Deletion Successful!", {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -118,49 +146,8 @@ toast.error("Only Comment Author Can Delete The Comment !", {
           theme: "light",
           transition: Bounce,
         });
-        return;
-    }
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/comments`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ commentId: id }),
-          },
-        );
-  
-  
-        if (res.ok) {
-          toast.success("Comment Deletion Successful!", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          });
-          setComment((prev) => prev.filter((c) => c._id !== id));
-        } else {
-          toast.error("Failed! Something went wrong...", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          });
-        }
-      } catch (error) {
-        console.error(error);
+        setComment((prev) => prev.filter((c) => c._id !== id));
+      } else {
         toast.error("Failed! Something went wrong...", {
           position: "top-center",
           autoClose: 5000,
@@ -173,19 +160,110 @@ toast.error("Only Comment Author Can Delete The Comment !", {
           transition: Bounce,
         });
       }
-    };
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed! Something went wrong...", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
+
+  const handleCommentUpdate = async (e) => {
+    e.preventDefault();
+    if (selectedComment.author._id !== user.id) {
+      toast.error("You are not comment author !", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+
+    try {
+      const form = new FormData(e.target);
+
+      const updatedData = {
+        comment: form.get("comment"),
+      };
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/comments/${selectedComment._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedData),
+        },
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        toast.success("Updated!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        setSelectedComment(null);
+        window.location.reload();
+      } else {
+        toast.error("Comment update failed !", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
+    } catch (error) {
+      toast.error("Something went wrong...", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
 
   return (
     <div>
       <div className="border-4 border-black bg-white shadow-[6px_6px_0_#000]">
-        
         <div className="border-b-4 border-black bg-[#fff36d] p-4">
           <h2 className="text-2xl font-black uppercase text-black">
             Comments ({comments.length})
           </h2>
         </div>
 
-        
         <form
           onSubmit={handleComment}
           className="border-b-4 border-black bg-pink-50 p-4"
@@ -241,20 +319,80 @@ toast.error("Only Comment Author Can Delete The Comment !", {
 
                       {/* DROPDOWN */}
                       {openMenuId === comment._id && (
-                        <div className="absolute right-0 top-8 z-50 w-32 border-4 border-black bg-white shadow-[4px_4px_0_#000]">
-                          <button
-                            className="w-full px-3 py-2 text-left text-sm font-bold hover:bg-green-200 text-black border border-black cursor-pointer"
-                            onClick={() => {
-                              console.log("edit", comment._id);
-                              setOpenMenuId(null);
-                            }}
-                          >
-                            Edit
-                          </button>
+                        <div className="absolute right-0 top-8 z-50 w-32 border-4 border-black bg-white shadow-[2px_2px_0_#000]">
+                          <Modal>
+                            <Button
+                              onClick={() => setSelectedComment(comment)}
+                              className="w-full bg-white hover:bg-green-200 px-3 py-2 text-sm font-bold text-black rounded-none"
+                            >
+                              Edit
+                            </Button>
+
+                            <Modal.Backdrop className="bg-black/40 backdrop-blur-sm">
+                              <Modal.Container placement="auto">
+                                <Modal.Dialog className="overflow-hidden border-4 border-black bg-gray-300 shadow-[10px_10px_0_#000] sm:max-w-md">
+                                  <Modal.CloseTrigger />
+
+                                  {/* HEADER */}
+                                  <Modal.Header className="border-b-4 border-black bg-[#fff36d] p-5">
+                                    <Modal.Heading className="text-3xl font-black uppercase text-black">
+                                      Edit Comment
+                                    </Modal.Heading>
+                                  </Modal.Header>
+
+                                  {/* BODY */}
+                                  <Modal.Body className="bg-[#e8e8e8] p-5">
+                                    <Surface className="border-none bg-transparent shadow-none">
+                                      <form
+                                        onSubmit={handleCommentUpdate}
+                                        className="space-y-5"
+                                      >
+                                        {/* TITLE */}
+                                        <div>
+                                          <Label className="mb-2 block text-sm font-black uppercase text-black">
+                                            Your Comment
+                                          </Label>
+
+                                          <Input
+                                            name="comment"
+                                            type="text"
+                                            defaultValue={comment.comment}
+                                            required
+                                            className="font-semibold text-black bg-white border-4 border-black"
+                                          />
+                                        </div>
+
+                                        {/* FOOTER */}
+                                        <Modal.Footer className="px-0 pt-4">
+                                          <Button
+                                            slot="close"
+                                            className="border-4 border-black bg-white px-5 py-2 font-black uppercase text-black shadow-[4px_4px_0_#000]"
+                                          >
+                                            Cancel
+                                          </Button>
+
+                                          <Button
+                                            type="submit"
+                                            className="border-4 border-black bg-[#caffbf] px-5 py-2 font-black uppercase text-black shadow-[4px_4px_0_#000]"
+                                          >
+                                            Update
+                                          </Button>
+                                        </Modal.Footer>
+                                      </form>
+                                    </Surface>
+                                  </Modal.Body>
+                                </Modal.Dialog>
+                              </Modal.Container>
+                            </Modal.Backdrop>
+                          </Modal>
+
+                          {/* ============================ */}
 
                           <button
-                            className="w-full px-3 py-2 text-left text-sm font-bold hover:bg-red-200 text-black border border-black cursor-pointer"
-                            onClick={() => deleteComment(comment._id,comment.author?._id)}
+                            className="w-full px-3 py-2 text-center text-sm font-bold hover:bg-red-200 text-black border border-black cursor-pointer"
+                            onClick={() =>
+                              deleteComment(comment._id, comment.author?._id)
+                            }
                           >
                             Delete
                           </button>
