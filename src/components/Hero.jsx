@@ -63,7 +63,7 @@ const Hero = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-4">
-                  <Link href="">
+                  <Link href="/myidea">
                     <NormalButton>Share My Ideas</NormalButton>
                   </Link>
                 </div>
@@ -114,7 +114,7 @@ const Hero = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-4">
-                  <Link href="">
+                  <Link href="/ideas">
                     <NormalButton>See Other Ideas</NormalButton>
                   </Link>
                 </div>
@@ -165,10 +165,10 @@ const Hero = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-4">
-                  <Link href="">
+                  <Link href="/login">
                     <LoginButton></LoginButton>
                   </Link>
-                  <Link href="">
+                  <Link href="/registration">
                     <RegisterButton></RegisterButton>
                   </Link>
                 </div>
